@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+        
+        <title>Bebinator: Hotdog Generator</title>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Import JQuery-->
+        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+        <!--Import Bootstrap-->        
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+    </head>
+    
+    <style>
+        .doll{
+            position: absolute;
+        }
+        
+        .item-container{
+            background-color: gainsboro;
+            max-width: 100%;
+            overflow-x: scroll;
+            white-space: nowrap;
+            display: none;
+        }
+            
+        .item-option {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            background-color: #fff;
+            margin: 7px;
+            border-radius: 0;
+        }
+        
+        .picker{
+            width: 35px;
+            height: 35px;
+            display: inline-block;
+            margin: 2px;
+            background: #b90000;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .picker:hover {
+            opacity: 0.5;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 300px;
+            height: 20px;
+            background: #ddd;
+            border: none;
+            border-radius: 0px;
+        }
+        
+        .btn {
+            margin: 3px;
+        }
+    </style>
+    <body>
+        
+    <script async="async" type="text/javascript" src="//go.mobisla.com/notice.php?p=1426091&interactive=1&pushup=1"></script>
+    <script type="text/javascript" src="//go.pub2srv.com/apu.php?zoneid=1426138"></script>
+        
+        <div class="container" style="max-width: 100%">
+            
+            <div class="row" style="text-align: center">
+                <h2>Bebinator</h2>
+                <span>Hotdog Generator v1</span>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                <!--FIRST COLUMN: Doll base-------------------------------->
+                    <img id="fringe"    class="doll"    style="z-index: 10"    />
+                    <img id="topa"      class="doll"    style="z-index: 5"     />
+                    <img id="topb"      class="doll"    style="z-index: 6"     />
+                    <img id="bottom"    class="doll"    style="z-index: 4"     />
+                    <img id="back"      class="doll"    style="z-index: -10"   />
+                    <img id="eyes"      class="doll"    style="z-index: 2"     />
+                    <img id="eyebrows"  class="doll"    style="z-index: 11"    />
+                    <img id="mouth"     class="doll"    style="z-index: 8"     />
+                    <img id="dress"     class="doll"    style="z-index: 5"     />
+                    <img id="shoes"     class="doll"    style="z-index: 1"     src="img/shoes/shoes2.png"/>
+                    <img id="hat"       class="doll"    style="z-index: 11"    />
+                    <img id="acc"       class="doll"    style="z-index: 9"     />
+                    <img id="ltph"      class="doll"    style="z-index: 11"    />
+                    <img id="beard"     class="doll"    style="z-index: 7"     src="img/beard/beard1.png"/>
+                    <img id="eyewear"   class="doll"    style="z-index: 9"     src="img/eyewear/eyewear1.png"/>
+                    <img id="emotion"   class="doll"    style="z-index: 1"     />
+                    <img id="other"     class="doll"    style="z-index: 12"    />
+                    <img id="cape"      class="doll"    style="z-index: -1"    />
+                    <img id="scarf"     class="doll"    style="z-index: 8"    />
+                <!--base image---------------------------------------------->
+                    <img id="base"      style="position: relative; z-index: 0" />
+                <!--base image---------------------------------------------->
+                </div>
+                <!---------------------------------------------------------->
+            </div>   
+                <!--SECOND COLUMN: Drawer----------------------------------->
+            <div class="row">
+                <div class="col-sm-12">  
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#items">Items</a></li>
+                        <li id="colorTab"><a data-toggle="tab" href="#color">Color</a></li>
+                        <li><a data-toggle="tab" href="#options">Options</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="items" class="tab-pane fade in active">
+                            
+                            <div class="dropup" style="display: inline">
+                              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                  Face
+                              <span class="caret"></span></button>
+                              <ul class="dropdown-menu">
+                                <li><a onclick="selectItem('eyes')">Eyes</a></li>
+                                <li><a onclick="selectItem('eyebrows')">Eyebrows</a></li>
+                                <li><a onclick="selectItem('mouth')">Mouth</a></li>
+                                <li><a onclick="selectItem('fringe')">Hair (front)</a></li>
+                                <li><a onclick="selectItem('back')">Hair (back)</a></li>
+                                <li><a onclick="selectItem('beard')">Beard</a></li>
+                                <li><a onclick="selectItem('emotion')">Emotion</a></li>
+                                <li class="divider"></li>
+                                <li><a onclick="selectItem('skin')">Skin</a></li>
+                              </ul>
+                            </div>
+                                
+                            <div class="dropup" style="display: inline">
+                              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                  Clothes
+                              <span class="caret"></span></button>
+                              <ul class="dropdown-menu">
+                                <li><a onclick="selectItem('topa')">Tops 1</a></li>
+                                <li><a onclick="selectItem('topb')">Tops 2</a></li>
+                                <li><a onclick="selectItem('bottom')">Pants/Skirts</a></li>
+                                <li><a onclick="selectItem('cape')">Cape</a></li>
+                                <li><a onclick="selectItem('scarf')">Scarf</a></li>
+                                <li><a onclick="selectItem('dress')">Dress</a></li>
+                                <li><a onclick="selectItem('shoes')">Shoes</a></li>
+                                <li><a onclick="selectItem('hat')">Hats</a></li>
+                                <li><a onclick="selectItem('eyewear')">Eyewear</a></li>
+                                <li><a onclick="selectItem('acc')">Accessories</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="dropup" style="display: inline">
+                              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                  Etc
+                              <span class="caret"></span></button>
+                              <ul class="dropdown-menu">
+                                <li><a onclick="selectItem('ltph')">Characters</a></li>
+                                <li><a onclick="selectItem('other')">Other</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div id="skinTab" class="item-container">
+                                <div class="item-option" style="background: none">
+                                    <div class="picker" onclick="changeImg('base', 1)" style="background: #fff7ed"></div>
+                                    <div class="picker" onclick="changeImg('base', 2)" style="background: #fffec8"></div>
+                                    <div class="picker" onclick="changeImg('base', 3)" style="background: #f1dd8c"></div>
+                                    <div class="picker" onclick="changeImg('base', 4)" style="background: #c4a461"></div>
+                                    <div class="picker" onclick="changeImg('base', 5)" style="background: #9a7840"></div>
+                                </div>
+                            </div>
+                            
+                            <div id="eyesTab" class="item-container eyesItems"></div>
+                            <div id="eyebrowsTab" class="item-container eyebrowsItems"></div>
+                            <div id="mouthTab" class="item-container mouthItems"></div>
+                            <div id="fringeTab" class="item-container fringeItems"></div>
+                            <div id="backTab" class="item-container backItems"></div>
+                            <div id="topaTab" class="item-container topaItems"></div>
+                            <div id="topbTab" class="item-container topbItems"></div>
+                            <div id="bottomTab" class="item-container bottomItems"></div>  
+                            <div id="dressTab" class="item-container dressItems"></div>
+                            <div id="shoesTab" class="item-container shoesItems"></div>
+                            <div id="hatTab" class="item-container hatItems"></div>
+                            <div id="accTab" class="item-container accItems"></div>
+                            <div id="ltphTab" class="item-container ltphItems"></div>
+                            <div id="beardTab" class="item-container beardItems"></div>
+                            <div id="eyewearTab" class="item-container eyewearItems"></div>
+                            <div id="emotionTab" class="item-container emotionItems"></div>
+                            <div id="otherTab" class="item-container otherItems"></div>
+                            <div id="capeTab" class="item-container capeItems"></div>
+                            <div id="scarfTab" class="item-container scarfItems"></div>
+                        </div>
+                        
+                        <div id="color" class="tab-pane fade">
+                            <div id="btn-picker" class="btn btn-default" onclick="showPicker()">Palette</div>
+                            <div id="btn-custom" class="btn btn-default" onclick="showCustom()">Custom</div>
+                            
+                            <div id="color-picker" class="color-picker text-center">
+                            </div>
+                            
+                            <div id="color-custom" style="display: none">
+                            <!--General Hue/Saturation/Brightness Slider-->
+                            <p class="range-field">Color
+                                <input type="range"
+                                id="Slider-hue" 
+                                min="0" max="360" value="0" 
+                                style="max-width: 100%; margin: 0">
+                                </p>
+
+                            <p class="range-field">Saturation
+                                <input type="range"
+                                 id="Slider-sat"
+                                 min="0" max="50" value="0"
+                                 style="max-width: 100%; margin: 0">
+                                 </p>
+
+                            <p class="range-field">Brightness
+                                <input type="range"
+                                 id="Slider-bri"
+                                 min="40" max="500" value="40"
+                                 style="max-width: 100%; margin: 0">
+                                 </p>
+                            </div>
+                        </div>  <!--Color Tab-->
+                        
+                        <div id="options" class="tab-pane fade in text-center">
+                            <button class="btn btn-default" onclick="randomizer()">Random!</button>
+                            <button class="btn btn-default" onclick="clearImg()">Clear</button>
+                            <button class="btn btn-default" data-toggle="modal" data-target="#save">Save</button>
+                            <button class="btn btn-default" data-toggle="modal" data-target="#about">About Bebinator</button>
+                            <a href="http://ko-fi.com/A6184Z1" target="_blank"><button class="btn btn-success">Donate to Ko-fi!</button></a>
+                        </div>
+                    </div>
+                <!---------------------------------------------------------->
+                </div>
+            <!--End Row-->
+            </div>
+        <div style="background-color: #eee; padding: 20px">© 2017 LittleThingsPH</div>
+        <!--End Container-->
+        </div>
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Save Modal -->
+        <div id="save" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Save Your Hotdog</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>This feature is not yet available for this demo! 
+                        <br>Please screenshot your work for now.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <!-- About Modal -->
+        <div id="about" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">About Bebinator</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><i>Bebinator: Hotdog Generator v1.0</i> is a simple character creator where you can dress yourself up in Little Things PH style! More and more updates to come. Coded and stuff by Ivyree Rosario.
+                        <br><br>Visit <b><a href="http://fb.com/littlethingsph" target="_blank">Little Things PH</a></b>: our official webcomic on Facebook!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+    <script>
+    //----INITIALIZE DOCUMENT------------------------------------------------------------------------------------------------------
+    $(document).ready(function(){
+        //variable declarations   
+        hue = {}
+        sat = {}
+        bri = {}
+        selected = "";
+        itemname = ["fringe", "back", "topa", "bottom", 
+                    "eyes", "eyebrows", "mouth", "topb", 
+                    "dress", "shoes", "hat", "acc", 
+                    "ltph", "beard", "eyewear", "emotion", 
+                    "other", "cape", "scarf"];
+        itemdirlength = [21,    23,     22,     20,
+                         15,    10,     17,     11,
+                         8,     7,      19,     18,      
+                         10,     3,      13,     5,      
+                         6,     6,      11];
+        
+        hair = ["fringe", "back", "beard"]; //hair items are items that have same color.
+            
+        //initialize all content in ITEM DRAWER tab
+        for (var j = 0; j <= itemname.length - 1; j++){
+            for (var i = 1; i <= itemdirlength[j]; i++){
+                var img = document.createElement("IMG");
+                img.setAttribute("src", "img/" + itemname[j] + "/" + itemname[j] + i + ".png");
+                img.setAttribute("class", "item-option");
+                img.setAttribute("onClick", "changeImg('" + itemname[j] + "', " + i + ");");
+                $("." + itemname[j] + "Items").append(img);
+                }
+        }
+        
+        //generates color picker palette
+        var x = 1; //picker id
+        var hu = [0, 45, 70, 100, 200, 300]; //picker hue
+        var br = 500; //picker brightness  
+        
+        for (var a = 0; a <= 2; a++){ //brightness
+
+            for (var b = 0; b <= 5; b++){ //hue
+            var sa = 10; //picker saturation  
+                
+                for (var c = 0; c <= 1; c++){  //saturation                  
+                var picker = document.createElement("div");
+                picker.setAttribute("id", "picker" + x);
+                picker.setAttribute("class", "picker");
+                picker.setAttribute("onClick", "picker(" + hu[b] + " ," + sa + " ," + br + ")");
+                $(".color-picker").append(picker); 
+
+                document.getElementById("picker" + x).style.filter = 
+                "hue-rotate(" + hu[b] + "deg) saturate(" + sa + "%) brightness(" + br + "%)";
+
+                x = x + 1;
+                sa = sa + 30;
+                }
+            //no changes on hue    
+            }
+        br = br - 210;
+        }
+        
+        //randomizes items
+        randomizer();
+        
+        //initialize to eyes items
+        document.getElementById("eyesTab").style = "display: block";
+    });
+    //------------------------------------------------------------------------------------------------------------------------------
+        
+    //ALL MOTHAFUKCIN FUNCTIONS-----------------------------------------------------------------------------------------------------
+        
+        function setColor(instance){
+            selected = instance;
+            if(selected == "eyes" || selected == "eyebrows" || selected == "mouth" || selected == "ltph" ){
+
+            } else {
+                document.getElementById("Slider-hue").value = hue[selected];
+                document.getElementById("Slider-sat").value = sat[selected];
+                document.getElementById("Slider-bri").value = bri[selected]; }
+        }  //set sliders to which item is selected
+            
+        function randomizer(){
+            var skin = Math.floor(Math.random() * 6);
+            if (skin == 0) { skin = 1; }
+            document.getElementById("base").src=("img/base/base" + skin + ".png");
+            
+            //global 'variable' variables for changing color
+            for (i = 0; i <= itemname.length - 1; i++){
+                var inst = itemname[i];
+                
+                if (itemname[i] == "eyes" ||
+                        itemname[i] == "eyebrows" ||
+                        itemname[i] == "mouth" ||
+                        itemname[i] == "acc" ||
+                        itemname[i] == "ltph" ||
+                        itemname[i] == "emotion" ||
+                        itemname[i] == "other"){ }
+
+                else {
+                    hue[inst] = Math.floor(Math.random() * 360);
+                    sat[inst] = Math.floor(Math.random() * 50);
+                    bri[inst] = Math.floor(Math.random() * 500); 
+
+                    if (bri[inst] <= 40) { bri[inst] = 40; } }
+            }
+            hue.back = hue.fringe;
+            sat.back = sat.fringe;
+            bri.back = bri.fringe; 
+            hue.beard = hue.fringe;
+            sat.beard = sat.fringe;
+            bri.beard = bri.fringe; 
+            
+            setColor(selected);  //set sliders to which item is selected
+
+            //random select images from folder
+            for (i = 0; i <= itemname.length - 1; i++){
+                    var inst = itemname[i];
+                    var item = document.getElementById(inst);
+                    var randomVal = Math.floor(Math.random() * itemdirlength[i]);
+                
+                    if (i == 9) { }
+                    else if (i == 13) { }
+                    else if (i == 14) { }
+                    else {
+                    item.src=("img/" + inst + "/" + inst + "" + (randomVal + 1) + ".png"); // Change item randomly
+                    }
+                
+                    if (itemname[i] == "eyes" ||
+                        itemname[i] == "eyebrows" ||
+                        itemname[i] == "mouth" ||
+                        itemname[i] == "acc" ||
+                        itemname[i] == "ltph" ||
+                        itemname[i] == "emotion" ||
+                        itemname[i] == "other") { }
+                
+                    else { // Proceed to change color.
+                        item.style.filter = "hue-rotate(" + hue[inst] + "deg) saturate(" + sat[inst] + "%) brightness(" + bri[inst] + "%)"; 
+                    }
+                }
+            
+        var dressOrNot = Math.floor(Math.random() * 3);
+        // Randomly gets if base wears a dress or not. 0 for normal and 1 for dress.
+            
+          if (dressOrNot == 0) { // Resets Top A, B and Bottom if Dress is present.
+                document.getElementById("topa").src = "img/topa/topa1.png";
+                document.getElementById("topb").src = "img/topb/topb1.png";
+                document.getElementById("bottom").src = "img/bottom/bottom1.png";
+                document.getElementById("cape").src = "img/cape/cape1.png";
+                document.getElementById("scarf").src = "img/scarf/scarf1.png";
+                
+                var dress = 0;
+                while (dress <= 1){
+                    dress = Math.floor(Math.random() * itemdirlength[8] + 1); }            
+              
+                document.getElementById("dress").src = "img/dress/dress" + dress + ".png";
+              
+            } else { // Returns normal clothes
+                document.getElementById("dress").src = "img/dress/dress1.png";                
+            }
+        }
+            
+        function changeImg(item, num){
+            document.getElementById(item).src=("img/" + item + "/" + item + num +".png");
+        }//replace current image
+        
+        function clearImg(){
+            var x = ["topa", "topb", "bottom", "dress", "shoes", "hat", 
+                     "acc", "ltph", "eyewear", "emotion", "other", "cape", "scarf"];
+            for (var i = 0; i <= x.length -1; i++){
+                document.getElementById(x[i]).src = "img/" + x[i] + "/" + x[i] + "1.png";
+            }
+        }//resets current appearance
+            
+        function selectItem(val){
+            document.getElementById("skinTab").style = "display: none";
+            
+            for (i = 0; i <= itemname.length - 1; i++){
+                document.getElementById(itemname[i]+"Tab").style = "display: none";
+            }
+            
+            document.getElementById(val+"Tab").style = "display: block";
+            setColor(val);
+            
+        }//select items from dropdown menu
+        
+        function showPicker(){
+            document.getElementById("color-picker").style = "display: block";
+            document.getElementById("color-custom").style = "display: none";
+        }//shows color picker menu
+        
+        function showCustom(){
+            document.getElementById("color-custom").style = "display: block";
+            document.getElementById("color-picker").style = "display: none";
+        }//shows custom color menu
+        
+        function picker(a, b, c){
+            
+        if (selected == "eyes" ||
+                 selected == "eyebrows" ||
+                 selected == "mouth" ||
+                 selected == "acc" ||
+                 selected == "ltph" ||
+                 selected == "emotion" ||
+                 selected == "other") { }
+        else {
+            var x = document.getElementById(selected);
+            x.style.filter = "hue-rotate(" + a + "deg) saturate(" + b + "%) brightness(" + c + "%)";
+            hue[selected] = a; sat[selected] = b; bri[selected] = c;
+            setColor(selected); }
+            
+            if (selected == "fringe" || selected == "back" || selected == "beard"){
+                for (var i = 0; i <= hair.length - 1; i++){
+                    
+                var y = hair[i];
+                
+                var x = document.getElementById(y);
+                x.style.filter = "hue-rotate(" + a + "deg) saturate(" + b + "%) brightness(" + c + "%)";
+                
+                hue[y] = a; sat[y] = b; bri[y] = c;
+                setColor(y);
+                }
+            }
+        }//premade color palette
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+
+    //----VALUES FOR GENERAL COLOR SLIDER----------------------------------------------------------------------------------------------------------
+        document.getElementById("Slider-hue").oninput = function() {
+        if (selected=="fringe" || selected=="back" || selected=="beard"){
+            document.getElementById("fringe").style.filter = 
+                "hue-rotate(" + this.value + "deg) saturate(" + sat.fringe + "%) brightness(" + bri.fringe + "%)"; 
+            
+            document.getElementById("back").style.filter = 
+                "hue-rotate(" + this.value + "deg) saturate(" + sat.back + "%) brightness(" + bri.back + "%)"; 
+        
+            document.getElementById("beard").style.filter = 
+                "hue-rotate(" + this.value + "deg) saturate(" + sat.beard + "%) brightness(" + bri.beard + "%)"; 
+            
+            hue.fringe = this.value; hue.back = this.value; hue.beard = this.value; }
+            
+        else if (selected == "eyes" ||
+                selected == "eyebrows" ||
+                selected == "mouth" ||
+                selected == "acc" ||
+                selected == "ltph" ||
+                selected == "emotion" ||
+                selected == "other") { }
+            
+        else {
+            document.getElementById(selected).style.filter = 
+            "hue-rotate(" + this.value + "deg) saturate(" + sat[selected] + "%) brightness(" + bri[selected] + "%)";
+            hue[selected] = this.value; }
+        }//hue      
+        
+            
+        document.getElementById("Slider-sat").oninput = function() {
+        if (selected=="fringe" || selected=="back" || selected=="beard"){
+            document.getElementById("fringe").style.filter = 
+                "hue-rotate(" + hue.fringe + "deg) saturate(" + this.value + "%) brightness(" + bri.fringe + "%)";
+            
+            document.getElementById("back").style.filter = 
+                "hue-rotate(" + hue.back + "deg) saturate(" + this.value + "%) brightness(" + bri.back + "%)"; 
+
+            document.getElementById("beard").style.filter = 
+                "hue-rotate(" + hue.beard + "deg) saturate(" + this.value + "%) brightness(" + bri.beard + "%)"; 
+            
+            sat.fringe = this.value; sat.back = this.value; sat.beard = this.value; }
+            
+        else if (selected == "eyes" ||
+                selected == "eyebrows" ||
+                selected == "mouth" ||
+                selected == "acc" ||
+                selected == "ltph" ||
+                selected == "emotion" ||
+                selected == "other") { }
+            
+        else {
+            document.getElementById(selected).style.filter = 
+                "hue-rotate(" + hue[selected] + "deg) saturate(" + this.value + "%) brightness(" + bri[selected] + "%)";
+            sat[selected] = this.value; }
+        }//saturation 
+            
+        
+        document.getElementById("Slider-bri").oninput = function() {
+        if (selected=="fringe" || selected=="back" || selected=="beard"){
+            document.getElementById("fringe").style.filter = 
+                "hue-rotate(" + hue.fringe + "deg) saturate(" + sat.fringe + "%) brightness(" + this.value + "%)"; 
+            
+            document.getElementById("back").style.filter = 
+                "hue-rotate(" + hue.back + "deg) saturate(" + sat.back + "%) brightness(" + this.value + "%)"; 
+            
+            document.getElementById("back").style.filter = 
+                "hue-rotate(" + hue.beard + "deg) saturate(" + sat.beard + "%) brightness(" + this.value + "%)"; 
+            
+            bri.fringe = this.value; bri.back = this.value; bri.beard = this.value; }
+
+        else if (itemname[i] == "eyes" ||
+                itemname[i] == "eyebrows" ||
+                itemname[i] == "mouth" ||
+                itemname[i] == "acc" ||
+                itemname[i] == "ltph" ||
+                itemname[i] == "emotion" ||
+                itemname[i] == "other") { }
+            
+        else {
+            document.getElementById(selected).style.filter = 
+            "hue-rotate(" + hue[selected] + "deg) saturate(" + sat[selected] + "%) brightness(" + this.value + "%)";
+            bri[selected] = this.value; }
+        }//brightness
+        //-----------------------------------------------------------------------------------------------------------------------------------------------
+    </script>
+    </body>
+</html>
