@@ -264,6 +264,24 @@ qacct:"p-Cfb4_M_YRw-_w"
         <!--End Container-->
         </div>
     <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Announcement -->
+        <div id="intro" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Welcome to Bebinator 1.0!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>If you're currently using mobile, make sure you're opening this link using <b>Google Chrome</b> updated to the latest version.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        
     <!-- Save Modal -->
         <div id="save" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -305,6 +323,9 @@ qacct:"p-Cfb4_M_YRw-_w"
     <script>
     //----INITIALIZE DOCUMENT------------------------------------------------------------------------------------------------------
     $(document).ready(function(){
+        
+        $('#intro').modal('show');
+        
         //variable declarations   
         hue = {}
         sat = {}
